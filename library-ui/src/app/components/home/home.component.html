@@ -1,0 +1,18 @@
+<mat-tab-group mat-align-tabs="start">
+    <ng-container *ngIf="userService.isAdmin()">
+        <mat-tab label="All Books"><app-book-list [bookListType]="bookListType.All"></app-book-list></mat-tab>
+        <mat-tab label="Issued Books"><app-book-list [bookListType]="bookListType.Issued"></app-book-list></mat-tab>
+    </ng-container>
+    <ng-container  *ngIf="!userService.isAdmin()">
+        <mat-tab label="Available Books">
+            <ng-template matTabContent>
+                <app-book-list [bookListType]="bookListType.AvailableToBorrow"></app-book-list>
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="Borrowed Books">
+            <ng-template matTabContent>
+                <app-book-list [bookListType]="bookListType.Borrowed"></app-book-list>
+            </ng-template>
+        </mat-tab>
+    </ng-container>
+</mat-tab-group>

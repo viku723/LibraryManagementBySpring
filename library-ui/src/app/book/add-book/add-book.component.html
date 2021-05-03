@@ -1,0 +1,27 @@
+<div class="add-book-wrapper">
+    <mat-card class="box">
+        <mat-card-header>
+            <mat-card-title>Add Book</mat-card-title>
+        </mat-card-header>
+
+        <form class="example-form" [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
+
+            <mat-card-content>
+                <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Book Name" formControlName="name">
+                </mat-form-field>
+
+                <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Author" formControlName="author">
+                </mat-form-field>
+
+                <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Price" formControlName="price">
+                </mat-form-field>
+            </mat-card-content>
+
+            <button mat-stroked-button color="accent" class="btn-block" [disabled]="formGroup.invalid">{{editBookId === -1 ? 'Add Book': 'Update book'}} </button>
+
+        </form>
+    </mat-card>
+</div>

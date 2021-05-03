@@ -1,0 +1,43 @@
+<div class="button-container" *ngIf="userService.isAdmin() && bookListType == bookListTypeEnum.All">
+    <button mat-flat-button color="primary" (click)="onAddBook()">Add Book</button>
+</div>
+<table mat-table [dataSource]="books$" class="mat-elevation-z8">
+    <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="author">
+        <th mat-header-cell *matHeaderCellDef> Author </th>
+        <td mat-cell *matCellDef="let element"> {{element.author}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef> Price </th>
+        <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let element">
+            <ng-container *ngIf="userService.isAdmin() && bookListType == bookListTypeEnum.All">
+                <mat-icon aria-hidden="false" aria-label="Example home icon" (click)="onEditBook(element.id)">edit</mat-icon>
+                <mat-icon aria-hidden="false" aria-label="Example home icon" color="warn" (click)="onDeleteBook(element.id)">delete</mat-icon>
+            </ng-container>
+            <ng-container *ngIf="!userService.isAdmin() && bookListType == bookListTypeEnum.AvailableToBorrow">
+                <button mat-button color="primary" (click)="onBorrow(element.id)">Borrow</button>
+            </ng-container>
+            <ng-container *ngIf="!userService.isAdmin() && bookListType == bookListTypeEnum.Borrowed">
+                <button mat-button color="primary" (click)="onReturn(element.id)">Return</button>
+            </ng-container>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
