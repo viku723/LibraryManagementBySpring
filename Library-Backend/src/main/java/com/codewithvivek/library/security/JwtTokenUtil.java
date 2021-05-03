@@ -20,7 +20,7 @@ import static java.lang.String.format;
 public class JwtTokenUtil {
 
     private final String jwtSecret = "zdtlD3JK56m6wTTgsNFhqzjqP";
-    private final String jwtIssuer = "example.io";
+    private final String jwtIssuer = "vivekanand-s.blogspot.com";
 
 //    JwtTokenUtil(Logger logger) {
 //        this.logger = logger;

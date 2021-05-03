@@ -37,7 +37,7 @@ public class UserService implements UserServiceAble, UserDetailsService {
     public void saveUser(User user) throws Exception {
         try {
             if (userDao.findByEmail( user.getEmail())!=null && userDao.findByEmail( user.getEmail()).getEmail() == user.getEmail()) {
-                throw new ValidationException("Username exists!");
+                throw new ValidationException("email already exists!");
             }
 //            if (!request.getPassword().equals(request.getRePassword())) {
 //                throw new ValidationException("Passwords don't match!");
@@ -47,7 +47,8 @@ public class UserService implements UserServiceAble, UserDetailsService {
 //            }
 
 //            User user = userEditMapper.create(request);
-            user.setPassword(passwordEncoder.encode(user.getEmail()));
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setRole(user.getRole() == null ? "User": "Admin");
             userDao.save(user);
         } catch (Exception e) {
             throw new Exception("Unable to save "+ e.getMessage());

@@ -28,22 +28,22 @@ public class User implements UserDetails, Serializable {
 
 
     private String role;
-    @OneToMany(targetEntity = com.codewithvivek.library.model.Book.class, cascade=ALL, mappedBy="user")
-    @JsonIgnore
-    private List<Book> book;
+//    @OneToMany(targetEntity = com.codewithvivek.library.model.Book.class, cascade=ALL, mappedBy="user")
+//    @JsonIgnore
+//    private List<Book> book;
 
     //---
     @Transient
     private boolean enabled = true;
     //---
 
-    public List<Book> getBook() {
-        return book;
-    }
-
-    public void setBook(Book book) {
-        this.book.add(book);
-    }
+//    public List<Book> getBook() {
+//        return book;
+//    }
+//
+//    public void setBook(Book book) {
+//        this.book.add(book);
+//    }
 
 
     public int getId() {

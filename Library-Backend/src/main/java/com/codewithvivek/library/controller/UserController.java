@@ -1,9 +1,10 @@
 package com.codewithvivek.library.controller;
 
-import com.codewithvivek.library.dto.AuthRequest;
+import com.codewithvivek.library.dto.*;
 import com.codewithvivek.library.model.User;
 import com.codewithvivek.library.security.JwtTokenUtil;
 import com.codewithvivek.library.service.UserServiceAble;
+import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -48,7 +48,9 @@ public class UserController {
     public ResponseEntity saveUser(@RequestBody User user) throws Exception {
         try {
             userService.saveUser(user);
-            return ResponseEntity.status(201).body("Successfully create user");
+            HashMap<String, String> map = new HashMap<>();
+            map.put("success", "Successfully create user");
+            return ResponseEntity.status(201).body(map);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Unable to save " + e.getMessage());
         }
@@ -65,14 +67,14 @@ public class UserController {
                     );
 
             User user = (User) authenticate.getPrincipal();
-
+            UserView userView = new UserView(user.getEmail(), user.getName(), jwtTokenUtil.generateAccessToken(user), user.getAuthorities());
             return ResponseEntity.ok()
                     .header(
                             HttpHeaders.AUTHORIZATION,
                             jwtTokenUtil.generateAccessToken(user)
                     )
-                    //.body(userViewMapper.toUserView(user));
-                    .body(user);
+                    .body(userView);
+                    //.body(user);
         } catch (BadCredentialsException ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
         }

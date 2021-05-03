@@ -11,26 +11,30 @@ import java.sql.Timestamp;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "author")
     private String author;
+    @Column(name = "price")
     private Double price;
     @Column(name = "issued_to")
     @JsonIgnore
-    private String issuedTo;
+    private int issuedTo;
     @CreationTimestamp
     private Timestamp created;
-    @ManyToOne
-    @JoinColumn(name="issued_to", nullable=false, insertable = false, updatable = false)
-    private User user;
+//    @ManyToOne
+//    @JoinColumn(name="issued_to", nullable=true, insertable = false, updatable = false)
+//    private User user;
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
+//    public User getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(User user) {
+//        this.user = user;
+//    }
 
 
     public int getId() {
@@ -65,12 +69,12 @@ public class Book {
         this.price = price;
     }
 
-    public String getIssuedTo() {
-        return user.getName();
+    public int getIssuedTo() {
+        return issuedTo;
     }
 
-    public void setIssuedTo(User user) {
-        this.user = user;
+    public void setIssuedTo(int issuedTo) {
+        this.issuedTo = issuedTo;
     }
 
 
